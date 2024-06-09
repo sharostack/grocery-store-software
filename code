@@ -1,0 +1,336 @@
+import pandas as pd 
+import numpy as np 
+#Options 
+print(('*'*15),('WELCOME TO SUNSHINE MART'),('*'*15),'\n') 
+print('1.BILL GENERATION\n')
+print('2.EMPLOYEE DETAILS\n')
+print('3.INVENTORY\n') 
+print('4.GRAPHS\n') 
+#Importing employee data dataframe 
+f=pd.read_csv("//Users//sharo2//Desktop//emp det.csv",skiprows=1) 
+#Importing inventory dataframe 
+l=pd.read_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+#Setting itemno. as index 
+l.set_index('Itemno.',inplace=True) 
+x=input('Select your option: ') 
+#Bill Generation 
+if x=='1': 
+      j=[]  #j is price list
+      quantity=[]
+      item=[] #item name list 
+      print(l.iloc[:,0:3]) #printing inventory dataframe 
+      p=int(input('Enter number of items to be purchased: ')) 
+      for i in range(p): 
+            u=input('Enter item number you want to purchase: ') 
+#Entering items to be purchased 
+             if u=='1': 
+                 e=int(input('Enter quantity: '))
+                 print()
+                 h=l.iloc[0,2] #h is price. 
+                 o=l.iloc[0,1] #o is item name
+                 print("Price for",o,'is:',h*e,'Rs')
+                 j.append(h*e) #Total price calculation for 1 product 
+                 item.append(o) #Adding item to item list 
+                 quantity.append(e) #Adding quantity to quantity list 
+                 b=l.iloc[0,5] 
+                 a=b-e
+                 l.iloc[0,5]=a
+                 l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+              elif u=='2':
+                   e=int(input('Enter quantity:'))    
+                   print()        
+                   h=l.iloc[1,2]
+                   o=l.iloc[1,1]
+                   print("Price for",o,'is:',h*e,'Rs')
+                   j.append(h*e)
+                   item.append(o)
+                   quantity.append(e)
+                   b=l.iloc[0,5]
+                   a=b-e
+                   l.iloc[0,5]=a   
+                   l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+
+              elif u=='3':
+                   e=int(input('Enter quantity:'))
+                   print()
+                   h=l.iloc[3,2]
+                   o=l.iloc[2,1]
+                   print("Price for",o,'is:',h*e,'Rs')
+                   j.append(h*e)
+                   item.append(o)
+                   quantity.append(e)
+                   b=l.iloc[0,5]
+                   a=b-e
+                   l.iloc[0,5]=a 
+                   l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+               elif u=='4':
+                   e=int(input('Enter quantity: '))
+                   print()
+                   h=l.iloc[3,2]
+                   o=l.iloc[3,1]
+                   print("Price for",o,'is:',h*e,'Rs')
+                   j.append(h*e)
+                   item.append(o)
+                   quantity.append(e)
+                   b=l.iloc[0,5]
+                   a=b-e
+                   l.iloc[0,5]=a
+                   l.to_csv("//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv")
+              elif u=='5':
+                   e=int(input('Enter quantity: '))
+                   print()
+                   h=l.iloc[4,2]
+                   o=l.iloc[4,1]
+                   print("Price for",o,'is:',h*e,'Rs')
+                  j.append(h*e)
+                  item.append(o)
+                  quantity.append(e)
+                  b=l.iloc[0,5]
+                  a=b-e
+                  l.iloc[0,5]=a
+                  l.to_csv("//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv")
+              elif u=='6':
+                  e=int(input('Enter quantity: '))
+                  print()
+                  h=l.iloc[5,2]
+                  o=l.iloc[5,1]
+                  print("Price for",o,'is:',h*e,'Rs')
+                  j.append(h*e)
+                  item.append(o)
+                  quantity.append(e)
+                  b=l.iloc[0,5]
+                  a=b-e
+                  l.iloc[0,5]=a
+                  l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+               elif u=='8':
+      e=int(input('Enter quantity: '))
+      print()
+      h=l.iloc[7,2]
+      o=l.iloc[7,1]
+      print("Price for",o,'is:',h*e,'Rs')
+      j.append(h*e)
+      item.append(o)
+      quantity.append(e)
+      b=l.iloc[0,5]
+      a=b-e
+      l.iloc[0,5]=a
+      l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+elif u=='9':
+      e=int(input('Enter quantity: ')) 
+      print()
+      h=l.iloc[8,2]
+      o=l.iloc[8,1]
+      print("Price for",o,'is:',h*e,'Rs') 
+      j.append(h*e)
+      item.append(o)
+  quantity.append(e) 
+b=l.iloc[0,5]
+a=b-e
+l.iloc[0,5]=a 
+l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+  elif u=='10':
+      e=int(input('Enter quantity: '))
+      print()
+      h=l.iloc[9,2]
+      o=l.iloc[9,1]
+      print("Price for",o,'is:',h*e,'Rs')
+      j.append(h*e)
+      item.append(o)
+      quantity.append(e)
+      b=l.iloc[0,5]
+      a=b-e
+      l.iloc[0,5]=a
+      l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+elif u=='11':
+     e=int(input('Enter quantity: '))
+     print()
+     h=l.iloc[10,2]
+     o=l.iloc[10,1]
+     print("Price for",o,'is:',h*e,'Rs')
+     j.append(h*e)
+     item.append(o)
+     quantity.append(e)
+     b=l.iloc[0,5]
+     a=b-e
+     l.iloc[0,5]=a
+     l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+elif u=='12':
+     e=int(input('Enter quantity: ')) print()
+     h=l.iloc[11,2]
+     o=l.iloc[11,1]
+     print("Price for",o,'is:',h*e,'Rs') 
+     j.append(h*e)
+     item.append(o)
+  quantity.append(e) 
+ b=l.iloc[0,5] 
+l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+  elif u=='13':
+     e=int(input('Enter quantity: '))
+     print()
+     h=l.iloc[12,2]
+     o=l.iloc[12,1]
+     print("Price for",o,'is:',h*e,'Rs')
+     j.append(h*e)
+     item.append(o)
+     quantity.append(e)
+     b=l.iloc[0,5]
+     a=b-e
+     l.iloc[0,5]=a
+     l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+elif u=='14':
+     e=int(input('Enter quantity: '))
+     print()
+     h=l.iloc[13,2]
+     o=l.iloc[13,1]
+     print("Price for",o,'is:',h*e,'Rs')
+     j.append(h*e)
+     item.append(o)
+     quantity.append(e)
+     b=l.iloc[0,5]
+     a=b-e
+     l.iloc[0,5]=a
+     l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv') 
+elif u=='15':
+     e=int(input('Enter quantity: ')) print()
+     h=l.iloc[14,2]
+     o=l.iloc[14,1]
+     print("Price for",o,'is:',h*e,'Rs') 
+     j.append(h*e)
+     item.append(o) 
+     quantity.append(e)
+     b=l.iloc[0,5]
+  a=b-e
+ l.iloc[0,5]=a
+l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+  else:
+    print('Item number does not exist!\n') #For item numbers out of range
+  print(('*'*15),('WELCOME TO SUNSHINE MART'),('*'*15))
+import datetime as dt
+print(dt.datetime.now(),'\n') #Adding date and time to bill
+print('='*15,'\n') 
+jk=pd.DataFrame(j,item,columns=['price']) #Creating dataframe of price 
+                                                                   # and item
+jk["quantity"]=quantity #adding column quantity to dataframe
+print(jk,'\n')
+print('='*20)
+print('Total price: ',sum(j)) #cumulative price
+print('*'*20,'\n')
+print('VAT IS 5%')
+print('VAT =',round(sum(j)*0.05)) #tax=cumulative price*0.05 
+#VAT + Cumulative price
+print('amount to be paid =',(round(sum(j)*0.05))+sum(j)) 
+print('*'*20) 
+#SENDING PROMOTIONAL EMAILS TO CUSTOMERS
+from email.message import EmailMessage 
+import ssl
+import smtplib 
+sender='ipproject12a@gmail.com' 
+password='furcpltgfqzeyixn' 
+l=input("Enter customer's Gmail account: ") 
+receiver=l 
+subject='Promotional Email'
+body='''
+ NEW DISCOUNTS AND OFFERS
+Sunshine mart is offering a new Sunny card. :)))
+Fulfill your love of the sea & get the chance to explore the marine life at Oman Aquarium with 25% off the tickets for Sunny card members! 
+Shop for Maxine latest Winter Collection now in-stores or shop online
+with our card!!
+  Shop for OMR 50 & get OMR 25 Gift voucher. Valid only on skincare products in our stores and many more discounts!!
+ Avail at your nearest store!
+ ''' 
+em=EmailMessage()
+em["From"]=sender
+em["To"]=receiver
+em["Subject"]=subject
+em.set_content(body)
+context=ssl.create_default_context()
+with smtplib.SMTP_SSL('smtp.gmail.com',465, context=context) as smtp: 
+      smtp.login(sender,password)        
+      smtp.sendmail(sender,receiver,em.as_string())
+print('Email sent successfully')
+  #EMPLOYEE DATA TABLE
+elif x=='2':
+      Y=input("Enter password:") 
+       if Y=='Dolphin': 
+           print('The employee details:') 
+           print(f) 
+       else:
+             print('\nWrong Password!')
+             print('ACCESS DENIED!\n')
+# only displaying EID,ENAME,JOB for wrong password 
+             print (f[['EID','ENAME','JOB']])
+ 
+                                              #INVENTORY DATA TABLE 
+elif x=='3':
+    print('select :')
+    print('1. Add new item to inventory') 
+    print('2. Deleting existing item') 
+    print('3. Display inventory\n') 
+    y=input('Select your option:')
+    if y=='1': 
+         a=int(input('Enter number of items to be added:'))
+  for i in range(a): 
+              q=input('Enter item name:') 
+              p=input('Enter Department name:')
+              o=float(input('Enter the cost:'))
+              s=int(input('Available quantity:'))
+              a=len(l.index)
+              print(a)
+              l.loc[a+1]=[p,q,o,np.nan,np.nan,s]
+              l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+              print(l)  
+  elif y=='2': 
+      print(l) 
+      t=int(input('enter number of items to be deleted:')) 
+      for i in range (t): 
+                    r=int(input('Enter item number:')) 
+                    print(l.drop([r],inplace=True))           
+       l.to_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+       print(l) 
+  elif y=='3': 
+        print(l) 
+  else:
+     print('number out of range!') 
+#Graph
+elif x=='4':
+import matplotlib.pyplot as plt 
+import numpy as np
+import pandas as pd 
+    print('Select :')
+    print('1. Monthly sales Chart')
+    print('2. Item Sales Chart(initially ordered and amount sold in a year')
+    a=input('Select your option:')
+#Monthly Sales - Pie Chart
+     if a=='1': 
+#importing dataframe sales
+          df = pd.read_csv('//Users//sharo2//Desktop//Sales.csv',skiprows=2)
+colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#8c564b"]
+            x=df['Total'] #extracting values from total column 
+            b=df['Month_Name'] #extracting month name from dataframe 
+            plt.pie(x,labels=b, colors=colors,autopct='%1.1f%%', shadow=True)
+#autopct -> for calculating percentage, shadow->gives shadow effect to chart
+             plt.title('Monthly sales made by employees') 
+             plt.show() 
+ #Item Sales - Horizontal Bar Chart
+       elif a=='2':
+             df=pd.read_csv('//Users//sharo2//Desktop//Inventory - Sheet1 (1).csv')
+             l=pd.DataFrame(df)
+            initial=l['Quantity initially ordered'] 
+            sold=l['Quantity sold (in a year)'] 
+            items=l['Item_name'] 
+            x=np.arange(len(items)) 
+            plt.title('Item Sales')
+            plt.xlabel('Number of items')
+            plt.ylabel('Items')
+            plt.legend(loc=1) 
+            plt.barh(x,initial,0.25,label='ordered',color='k')
+            plt.barh(x+0.25,sold,0.25,label='sold',color='c')
+            plt.yticks(x,items) 
+            plt.legend(loc=1) 
+            plt.show()
+       else:
+            print('No chart displayed') 
+
+#IF ANY NUMBER OTHER THAN 1,2,3,4 IS CHOSEN 
+else:
+         print('number shows no output')
