@@ -1,2 +1,8 @@
 # grocery-store-software
-The code for a software that uses both python and mySQl to make bills in a grocery store.It also has an inventory that can reduce items based on bill and sends a promotional email to the customer at the end of purchase.The employee details are protected by a password and only certain sections are available to be viewed by individulas with no password access.
+The code for a software that uses both python and mySQl to perform various functions in a grocery store.
+This software has:
+1.Inventory table - has data of all the available products in grocery with amount currently present.
+2.Employee details table - few columns are visible without password, the more sensitive information requires a password.
+3.Bill making - generates a bill based on purchase. Also reduces the purchased items from inventory.
+4.Email - sends a promotional email to the customer.
+5.Graphs - displays graphs outlining the total sales in each month and the quantities initially ordered and the quantities sold in a year.
