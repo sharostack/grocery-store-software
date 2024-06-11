@@ -1,5 +1,5 @@
 # grocery-store-software
-The code for a software that uses both python and mySQl to perform various functions in a grocery store.
+The code for a software that uses both python and csv to perform various functions in a grocery store.
 This software has:
 1.Inventory table - has data of all the available products in grocery with amount currently present.
 2.Employee details table - few columns are visible without password, the more sensitive information requires a password.
