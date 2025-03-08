@@ -6,3 +6,5 @@ This software has:
 3.Bill making - generates a bill based on purchase. Also reduces the purchased items from inventory.
 4.Email - sends a promotional email to the customer.
 5.Graphs - displays graphs outlining the total sales in each month and the quantities initially ordered and the quantities sold in a year.
+
+Documentation provided in Projects.pdf
