@@ -1,0 +1,11 @@
+Itemno,Department,item_name, Cost(in rupees),Quantity initially ordered, Quantity sold (in a year),Quantity Available
+1,Skincare,Facewash,150,1300,1225,65
+2,Skincare,Scrub,220,1350,1160,190
+3,Skincare,Serum,149,1200,1165,35
+4,Skincare,Moisturizer,180,1100,950,150
+5,Skincare,Toner,130,950,800,150
+6,Makeup,Foundation,500,800,700,100
+7,Makeup,Lipstick,350,1200,1000,200
+8,Makeup,Eyeliner,250,1100,1050,50
+9,Haircare,Shampoo,300,1500,1400,100
+10,Haircare,Conditioner,280,1400,1300,100

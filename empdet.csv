@@ -1,0 +1,12 @@
+Table 1
+EID,ENAME,JOB ,ADDRESS, Phone Number,Salary (monthly), Gender 
+S1001,Rishi,Sales,JS road,6541515865,10000,M
+S1002,Mohan,Manager,MG road,6541515866,12000,M 
+S1003,Rema,HR,ABC street,6541515867,11000,F 
+S1004,Kamal,Engineer,DEF avenue,6541515868,15000,M 
+S1005,Diya,Designer,GHI lane,6541515869,13000,F 
+S1006,Mahesh,Developer,JKL block,6541515870,14000,M 
+S1007,Anupam,Analyst,MNO road,6541515871,12500,M 
+S1008,Deepti,Architect,PQR circle,6541515872,13500,F 
+S1009,Vihaan,Sales,STU street,6541515873,10000,M 
+S1010,Tara,Support,VWX avenue,6541515874,11000,F
