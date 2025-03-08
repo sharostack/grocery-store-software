@@ -7,7 +7,7 @@ print('2.EMPLOYEE DETAILS\n')
 print('3.INVENTORY\n') 
 print('4.GRAPHS\n') 
 #Importing employee data dataframe 
-f=pd.read_csv("empdet.csv",skiprows=1) 
+f=pd.read_csv("empdet.csv") 
 #Importing inventory dataframe 
 l=pd.read_csv('inventory.csv')
 #Setting itemno. as index 
@@ -260,7 +260,7 @@ elif x=='2':
              print('\nWrong Password!')
              print('ACCESS DENIED!\n')
 # only displaying EID,ENAME,JOB for wrong password 
-             print (f[['EID','ENAME','JOB']])
+             print (f[['EID','ENAME','JOB ']])
  
                                               #INVENTORY DATA TABLE 
 elif x=='3':
@@ -303,9 +303,9 @@ elif x=='4':
 #Monthly Sales - Pie Chart
  if a=='1': 
 #importing dataframe sales
-          df = pd.read_csv('sales.csv',skiprows=2)
+          df = pd.read_csv('sales.csv')
           colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#8c564b"]
-          x=df['Total'] #extracting values from total column 
+          x=df['Total '] #extracting values from total column 
           b=df['Month_Name'] #extracting month name from dataframe 
           plt.pie(x,labels=b, colors=colors,autopct='%1.1f%%', shadow=True)
 #autopct -> for calculating percentage, shadow->gives shadow effect to chart
@@ -314,10 +314,11 @@ elif x=='4':
  #Item Sales - Horizontal Bar Chart
  elif a=='2':
             df=pd.read_csv('inventory.csv')
+            print(df.columns)
             l=pd.DataFrame(df)
             initial=l['Quantity initially ordered'] 
-            sold=l['Quantity sold (in a year)'] 
-            items=l['Item_name'] 
+            sold=l[' Quantity sold (in a year)'] 
+            items=l['item_name'] 
             x=np.arange(len(items)) 
             plt.title('Item Sales')
             plt.xlabel('Number of items')
