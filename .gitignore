@@ -1,0 +1,4 @@
+sunshine_mart.db
+__pycache__/
+tests/__pycache__/
+.venv/
