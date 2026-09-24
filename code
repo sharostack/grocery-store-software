@@ -8,6 +8,7 @@ import ssl
 from email.message import EmailMessage
 
 from database import InventoryDatabase
+from employee_auth import employee_details_password_is_valid
 
 
 db = InventoryDatabase()
@@ -113,11 +114,10 @@ def main():
     if option == "1":
         billing()
     elif option == "2":
-        if input("Enter password: ") == "Dolphin":
+        if employee_details_password_is_valid(input("Enter password: ")):
             print_rows(db.employees())
         else:
             print("\nWrong Password! ACCESS DENIED!\n")
-            print_rows(db.employees(public_only=True))
     elif option == "3":
         inventory()
     elif option == "4":

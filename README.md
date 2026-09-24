@@ -1,76 +1,91 @@
 # Sunshine Mart Inventory & Billing System
 
-A small Python command-line project for inventory management, employee viewing, billing, and sales charts. It was migrated from CSV-backed pandas dataframes to a SQLite relational database to demonstrate practical Python + SQL data handling.
+A compact Data Engineering portfolio project combining a Python operational application with a visible CSV-to-SQLite ETL pipeline, SQL analytics, and a Streamlit dashboard.
 
 ## Architecture
 
-**Previous:** Python script → pandas reads/writes `inventory.csv`; employee and monthly-chart data read from CSV files.
+```text
+CSV Source Data → ETL / Validation → SQLite → SQL Analytics → Streamlit
 
-**Current:** Python CLI → Python's built-in `sqlite3` module → `sunshine_mart.db` → inventory, employee, billing, reporting, and chart queries.
+inventory.csv / empdet.csv / sales.csv
+                 ↓
+      Python: extract → validate → transform → load
+                 ↓
+      SQLite operational and ETL-monitoring tables
+                 ↓
+        Reusable analytical SQL queries
+                 ↓
+     Streamlit dashboard and reporting pages
+```
 
-SQLite was selected because this is a local, single-user student application: it is relational, uses real SQL, requires no server setup, and is included with Python.
+The original command-line interface is retained. Streamlit is an alternative frontend; both use the same `InventoryDatabase` data-access layer.
 
-## Database schema
+## Data model
 
-| Table | Purpose |
-| --- | --- |
-| `products` | Inventory product ID, department, name, price, historical quantity metrics, and available stock. |
-| `employees` | Employee details from `empdet.csv`. |
-| `sales` | One completed bill: timestamp, optional customer email, subtotal, VAT, and total. |
-| `sale_items` | Purchased products for each bill; references `sales` and `products`. |
-| `monthly_sales` | Historic monthly totals used by the existing pie chart. |
-| `monthly_employee_sales` | Historic per-employee monthly figures from `sales.csv`; references `monthly_sales`. |
+| Layer | Tables | Purpose |
+| --- | --- | --- |
+| Operational (OLTP) | `products`, `employees`, `sales`, `sale_items` | Inventory CRUD and completed billing transactions. |
+| Historical source analytics | `monthly_sales`, `monthly_employee_sales` | Aggregate monthly source data used by charts. |
+| Pipeline monitoring | `etl_runs`, `etl_rejections` | ETL status, record counts, errors, and rejected source rows. |
 
-`sale_items.sale_id → sales.sale_id`, `sale_items.product_id → products.product_id`, and `monthly_employee_sales.month_name → monthly_sales.month_name` are foreign keys. Primary keys, unique values where appropriate, `NOT NULL`, and non-negative `CHECK` constraints provide basic validation.
+Foreign keys, primary keys, unique constraints, `NOT NULL`, and non-negative `CHECK` constraints protect data quality. A separate star schema is intentionally not added: `sales.csv` is monthly aggregate data, not transaction-level product sales tied to real employee IDs, so a fact/dimension model would duplicate data and misrepresent its grain.
 
-## CSV migration
+## ETL pipeline
 
-The original CSV files are retained as seed data and are not edited or removed:
+[`etl.py`](etl.py) exposes `extract()`, `validate()`, `transform()`, `load()`, and `run_pipeline()`.
 
-- `inventory.csv` imports into `products`.
-- `empdet.csv` imports into `employees`; its report-title row is skipped.
-- `sales.csv` imports into `monthly_sales` and `monthly_employee_sales`; its report-title row is skipped.
+- Extract reads the actual CSV headers and skips source title rows.
+- Validation separates accepted and rejected rows. It checks product IDs, names, costs, quantities and quantity consistency; employee IDs, names and salaries; and sales months, duplicates, and numeric values.
+- Transformation trims values and converts numeric strings to typed database records.
+- Load uses the SQLite data-access layer transactionally. Each run logs `RUNNING`, `SUCCESS`, or `FAILED` in `etl_runs` and stores rejection reasons in `etl_rejections`.
 
-Completed bills are now persisted in `sales` and `sale_items`; the old program printed bills but did not save them.
+`python etl.py` performs a full refresh for a fresh demo database, replacing source-derived and transactional sales data. `python etl.py --incremental` is a non-destructive upsert for employees and historical monthly records; existing products are not overwritten because available stock may have changed through billing. The CSV sources have no timestamp, version, or reliable watermark, so true changed-record detection is not claimed or implemented.
 
-## Run from a fresh clone
+## SQL analytics
 
-Python 3.10+ is recommended. Charts require matplotlib:
+Reusable database methods provide revenue and units by department, monthly recorded revenue, top products by revenue and quantity, transaction count and average value, inventory value, low-stock products, department contribution, and source-history inventory turnover. They demonstrate `JOIN`, `GROUP BY`, `SUM`, `COUNT`, `AVG`, `ORDER BY`, `WHERE`, `HAVING`, `COALESCE`, and parameterized SQL.
+
+## Setup and run
+
+Python 3.10+ is recommended.
 
 ```bash
-python3 -m venv .venv
+# Setup
+python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python3 database.py
-python3 code
+
+# Initialize database
+python database.py
+
+# Run ETL
+python etl.py
+
+# Run CLI
+python code
+
+# Run Streamlit
+streamlit run streamlit_app.py
+
+# Run tests
+python -m unittest discover -s tests -v
 ```
 
-`database.py` creates tables and imports CSV seed data only when the related table is empty. To replace a local database with a fresh import:
+The Streamlit app includes Dashboard, Inventory, Billing, Sales & Reports, Employee Details, and **ETL & Data Quality**. Employee Details is password-protected and shows the full employee records stored in SQLite after authentication.
+
+Set `EMPLOYEE_DETAILS_PASSWORD` in the environment, or as a Streamlit secret of the same name, before viewing employee information. Do not commit that value.
+
+To replace the local database with the legacy seed import only:
 
 ```bash
-python3 database.py --reset
+python database.py --reset
 ```
 
-Promotional email is disabled unless both environment variables are configured:
+## Data Engineering concepts demonstrated
 
-```bash
-export SUNSHINE_MART_EMAIL='your-address@example.com'
-export SUNSHINE_MART_EMAIL_PASSWORD='your-app-password'
-```
-
-## SQL demonstrated
-
-- `SELECT` for inventory, employee, graph, and report retrieval.
-- `INSERT` for products, imported data, bills, and bill line items.
-- `UPDATE` to reduce available stock and increase sold quantity in the same transaction.
-- `DELETE` for product removal when it has no referenced sale items.
-- `JOIN`, `GROUP BY`, `SUM`, and `COUNT` in monthly-sales and product-sales reports.
-- Primary keys, foreign keys, `UNIQUE`, `NOT NULL`, and `CHECK` constraints.
-
-## Tests
-
-```bash
-python3 -m unittest discover -s tests -v
-```
-
-The tests verify initialization/import, product add/delete and duplicate-ID protection, bill and bill-line creation, inventory updates, JOIN/GROUP BY reporting, and stock-underflow protection.
+- Batch ETL from CSV into a relational database.
+- Data validation, rejection capture, and data-quality summaries.
+- Typed transformation and transactional SQL loading.
+- Pipeline monitoring with status, timestamps, counts, errors, and rejected records.
+- OLTP modeling plus SQL-based analytical reporting.
+- A Streamlit layer that calls database methods rather than embedding raw SQL.

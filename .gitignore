@@ -1,4 +1,6 @@
-sunshine_mart.db
+*.db
 __pycache__/
+*.pyc
 tests/__pycache__/
 .venv/
+.streamlit/secrets.toml

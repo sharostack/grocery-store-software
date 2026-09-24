@@ -17,7 +17,15 @@ class DatabaseWorkflowTests(unittest.TestCase):
 
     def test_seed_data_and_analytics_are_loaded(self):
         self.assertEqual(len(self.db.products()), 10)
-        self.assertEqual(len(self.db.employees()), 10)
+        employees = self.db.employees()
+        self.assertEqual(len(employees), 10)
+        first = dict(employees[0])
+        self.assertEqual(
+            set(first),
+            {"employee_id", "name", "job_title", "address", "phone", "monthly_salary", "gender"},
+        )
+        self.assertEqual(first["employee_id"], "S1001")
+        self.assertEqual(first["name"], "Rishi")
         totals = self.db.monthly_totals()
         self.assertEqual(len(totals), 12)
         self.assertEqual(totals[0]["month_name"], "Jan")
@@ -45,6 +53,23 @@ class DatabaseWorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.record_sale([(1, 66)])
         self.assertEqual(self.db.products()[0]["quantity_available"], 65)
+
+    def test_dashboard_and_inventory_update(self):
+        metrics = self.db.dashboard_metrics()
+        self.assertEqual(metrics["total_products"], 10)
+        self.assertEqual(metrics["transaction_count"], 0)
+        self.assertGreater(metrics["total_inventory_value"], 0)
+        self.db.update_inventory(1, 12)
+        self.assertEqual(self.db.products()[0]["quantity_available"], 12)
+        self.assertTrue(self.db.inventory_by_department())
+
+    def test_analytical_queries_use_recorded_sales(self):
+        self.db.record_sale([(1, 2), (6, 1)])
+        self.assertEqual(self.db.transaction_analytics()["transaction_count"], 1)
+        self.assertEqual(self.db.revenue_by_department()[0]["department"], "Makeup")
+        self.assertEqual(self.db.top_products_by_quantity()[0]["product_id"], 1)
+        self.assertEqual(len(self.db.low_stock_products(100)), 6)
+        self.assertTrue(self.db.inventory_turnover_report())
 
 
 if __name__ == "__main__":
